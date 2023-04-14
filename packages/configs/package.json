@@ -1,0 +1,14 @@
+{
+  "name": "configs",
+  "version": "0.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "eslint-config-next": "^12.0.8",
+    "eslint-config-prettier": "^8.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.9",
+    "autoprefixer": "^10.4.14"
+  }
+}
