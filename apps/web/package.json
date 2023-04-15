@@ -9,11 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.29.1",
+    "@tanstack/react-query-devtools": "^4.29.1",
+    "axios": "^1.3.5",
     "formik": "^2.2.9",
     "next": "^13.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "ui": "*"
+    "react-query": "^3.39.3",
+    "ui": "*",
+    "zustand": "^4.3.7"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

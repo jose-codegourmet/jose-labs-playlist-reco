@@ -1,18 +1,25 @@
 import cors from "cors";
+import bodyParser from "body-parser";
 import express from "express";
+import generateMoodPlaylistFromPrompt from "./controllers/prompts";
 
 const app = express();
 const port = 9999;
 
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors());
 
-app.get("/workspaces", (_, response) => {
-  const workspaces = [
-    { name: "api", version: "1.0.0" },
-    { name: "types", version: "1.0.0" },
-    { name: "web", version: "1.0.0" },
-  ];
-  response.json({ data: workspaces });
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.post("/generate-spotify-mood", async (req, res) => {
+  const aiResponse = await generateMoodPlaylistFromPrompt(req.body.mood);
+  res.send(aiResponse);
+});
+
+app.get("/get-playlist", async (req, res) => {
+  res.send({
+    example: "123",
+  });
 });
 
 app.listen(port, () => console.log(`Listening on http://localhost:${port}`));

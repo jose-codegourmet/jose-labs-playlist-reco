@@ -6,4 +6,7 @@ module.exports = {
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
   },
+  env: {
+    envAiApiUrl: process.env.AI_API_URL,
+  },
 };
