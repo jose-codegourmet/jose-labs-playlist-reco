@@ -7,9 +7,12 @@ export interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
 }
 
 export const Button: FC<ButtonProps> = (props) => {
-  const { label } = props;
+  const { label, className = "" } = props;
   return (
-    <button className="btn btn-primary btn-md" {...omit(props, ["label"])}>
+    <button
+      className={`btn btn-primary btn-md ${className}`}
+      {...omit(props, ["label"])}
+    >
       {label}
     </button>
   );

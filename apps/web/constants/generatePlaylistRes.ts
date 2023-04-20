@@ -1,4 +1,4 @@
-const SAMPLE_RESPONSE = {
+export const GENERATE_PLAYLIST_RESPONSE = {
   status: 200,
   response: {
     message: {

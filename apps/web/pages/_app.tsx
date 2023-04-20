@@ -15,6 +15,10 @@ type ReactQueryProps = {
   };
 };
 
+if (process.env.NODE_ENV === "development") {
+  require("../mocks/msw.ts");
+}
+
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp({
   Component,

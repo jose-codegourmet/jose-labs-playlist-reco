@@ -9,7 +9,7 @@ interface IPlaylistStoreState {
 const usePlaylistStore = create<IPlaylistStoreState>()((set) => ({
   playlist: [],
   addPlaylist: (newPlaylist) => set({ playlist: newPlaylist }),
-  removePlaylist: () => set({ playlist: null }),
+  removePlaylist: () => set({ playlist: [] }),
 }));
 
 export default usePlaylistStore;

@@ -1,5 +1,9 @@
+import { Button } from "ui";
+import usePlaylistStore from "../stores/playlist";
+
 export default function Playlist(props: any) {
   const { playlist } = props;
+  const removePlaylist = usePlaylistStore((state) => state.removePlaylist);
 
   const renderSongs = () => {
     return playlist.map((s: any, k: string) => (
@@ -28,6 +32,17 @@ export default function Playlist(props: any) {
     ));
   };
   return (
-    <div className="mt-10 pt-10 grid grid-cols-3 gap-4">{renderSongs()}</div>
+    <div className="flex flex-col w-full">
+      <div className="mt-10 pt-10 grid grid-cols-3 gap-4 w-full">
+        {renderSongs()}
+      </div>
+      <Button
+        label="Clear"
+        className="max-w-[300px] mx-auto w-full"
+        onClick={() => {
+          removePlaylist();
+        }}
+      />
+    </div>
   );
 }

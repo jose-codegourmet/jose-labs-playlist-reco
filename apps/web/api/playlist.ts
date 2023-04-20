@@ -1,11 +1,12 @@
 import axios from "axios";
 
-const config = {
+const GPT_API_CONFIG = {
   baseURL: process.env.envAiApiUrl,
 };
-console.log("[+] config === ", config);
 
-export const API = axios.create(config);
+console.log("[+] config === ", GPT_API_CONFIG);
+
+export const API = axios.create(GPT_API_CONFIG);
 
 export const createPlaylistsByMood = async (mood: string) => {
   const res = await API.post("/generate-spotify-mood", {
