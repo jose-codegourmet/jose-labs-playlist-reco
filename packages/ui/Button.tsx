@@ -11,7 +11,7 @@ export const Button: FC<ButtonProps> = (props) => {
   return (
     <button
       className={`btn btn-primary btn-md ${className}`}
-      {...omit(props, ["label"])}
+      {...omit(props, ["label", "className"])}
     >
       {label}
     </button>

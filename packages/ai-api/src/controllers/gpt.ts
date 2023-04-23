@@ -5,7 +5,7 @@ import csvToObject from "../utils/csvStringToObject";
 
 dotenv.config();
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.ENV_OPENAI_API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);
@@ -28,9 +28,6 @@ export default async function doPrompt(prompt: string) {
     });
 
     const playlistCSV = completion.data.choices[0]?.message?.content || "";
-    const playlistArr = playlistCSV.split("\n").map((entry) => {
-      return entry.split(",");
-    });
 
     const responseObject = {
       ...pick(completion.data, ["id", "usage"]),

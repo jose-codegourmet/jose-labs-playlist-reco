@@ -5,7 +5,7 @@ dotenv.config();
 
 export default async function generateMoodPlaylistFromPrompt(mood: string) {
   const prompt = `
-    Generate a ${process.env.SONGS_LIMIT} song playlist based on this mood "${mood}" in csv format with this schema
+    Generate a ${process.env.ENV_SONGS_LIMIT} song playlist based on this mood "${mood}" in csv format with this schema
     {
         title: string;
         artist: string;
@@ -14,5 +14,10 @@ export default async function generateMoodPlaylistFromPrompt(mood: string) {
     }
     where in youtubeLink is a public url from youtube
     `;
-  return await doPrompt(prompt.trim());
+  const promptResponse = await doPrompt(prompt.trim());
+
+  return {
+    ...promptResponse,
+    mood,
+  };
 }

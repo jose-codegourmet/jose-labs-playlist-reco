@@ -1,5 +1,6 @@
 import { AppProps } from "next/app";
 import "../styles/main.scss";
+import { Albert_Sans } from "next/font/google";
 
 import {
   DehydratedState,
@@ -19,6 +20,12 @@ if (process.env.NODE_ENV === "development") {
   require("../mocks/msw.ts");
 }
 
+const fontfamily = Albert_Sans({
+  weight: ["100", "200", "500", "800"],
+  style: ["normal"],
+  subsets: ["latin"],
+});
+
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp({
   Component,
@@ -29,7 +36,7 @@ export default function MyApp({
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
-        <div data-theme="forest">
+        <div data-theme="forest" className={fontfamily.className}>
           <Component {...pageProps} />
         </div>
         <ReactQueryDevtools initialIsOpen={false} />
