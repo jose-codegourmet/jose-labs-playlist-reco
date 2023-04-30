@@ -1,23 +1,27 @@
 import React from "react";
 import GeneratePlaylistForm from "../components/GeneratePlaylistForm";
 import usePlaylistStore from "../stores/playlist";
-import Playlist from "../components/Playlist";
+import SongsGenerationContainer from "../components/SongsGenerationContainer";
+import Layout from "../layout/Layout";
 
 export default function Web() {
-  const { playlist } = usePlaylistStore((state) => ({
-    playlist: state.playlist,
+  const { suggestedSongs } = usePlaylistStore((state) => ({
+    suggestedSongs: state.suggestedSongs,
   }));
 
-  // console.log("playlist === ", playlist);
   return (
-    <section className="h-auto min-h-screen flex items-center justify-center">
-      <div className="container flex items-center justify-center flex-col">
-        <article className="prose mb-10">
-          <h1>What are you feeling?</h1>
-        </article>
-        <GeneratePlaylistForm hasPlaylist={playlist.length > 0} />
-        {playlist.length > 0 && <Playlist playlist={playlist} />}
-      </div>
-    </section>
+    <Layout>
+      <section className="h-auto min-h-screen flex items-center justify-center">
+        <div className="container flex items-center justify-center flex-col">
+          <article className="prose mb-10">
+            <h1>What are you feeling?</h1>
+          </article>
+          <GeneratePlaylistForm hasPlaylist={suggestedSongs.length > 0} />
+          {suggestedSongs.length > 0 && (
+            <SongsGenerationContainer suggestedSongs={suggestedSongs} />
+          )}
+        </div>
+      </section>
+    </Layout>
   );
 }

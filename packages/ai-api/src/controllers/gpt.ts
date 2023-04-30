@@ -1,7 +1,6 @@
 import { Configuration, OpenAIApi } from "openai";
 import dotenv from "dotenv";
 import { pick } from "lodash";
-import csvToObject from "../utils/csvStringToObject";
 
 dotenv.config();
 const configuration = new Configuration({
@@ -27,16 +26,13 @@ export default async function doPrompt(prompt: string) {
       messages: [{ role: "user", content: prompt }],
     });
 
-    const playlistCSV = completion.data.choices[0]?.message?.content || "";
-
-    const responseObject = {
-      ...pick(completion.data, ["id", "usage"]),
-      playlist: csvToObject(playlistCSV),
-    };
-
     return {
       status: 200,
-      response: { message: responseObject },
+      response: {
+        message: {
+          ...pick(completion.data, ["id", "model", "usage", "choices"]),
+        },
+      },
     };
   } catch (error: any) {
     // Consider adjusting the error handling logic for your use case

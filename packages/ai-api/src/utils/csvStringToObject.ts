@@ -5,6 +5,8 @@ function csvToObject(csvString: string) {
 
   for (let i = 1; i < lines.length; i++) {
     const currentLine = lines[i].split(",");
+    console.log(`[${i}]`);
+    console.log("currentLine == ", currentLine);
     if (currentLine.length !== headers.length) {
       throw new Error("CSV file is malformed");
     }

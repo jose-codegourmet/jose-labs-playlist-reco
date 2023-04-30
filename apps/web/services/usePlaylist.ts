@@ -4,7 +4,9 @@ import usePlaylistStore from "../stores/playlist";
 
 const usePlaylist = () => {
   const queryClient = useQueryClient();
-  const addPlaylist = usePlaylistStore((state) => state.addPlaylist);
+  const addPlaylist = usePlaylistStore(
+    (state) => state.generateSongsSuggestion
+  );
 
   const {
     mutate: createPlaylist,
@@ -19,7 +21,7 @@ const usePlaylist = () => {
       console.log("data === ", data);
       console.log("variables === ", variables);
       queryClient.setQueryData(["playlist", { mood: variables }], data);
-      addPlaylist(data.response.message.playlist);
+      addPlaylist(data.response.playlist);
     },
   });
 

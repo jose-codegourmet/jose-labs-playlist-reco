@@ -54,8 +54,9 @@ export default function GeneratePlaylistForm(props: { hasPlaylist: boolean }) {
         )}
 
         <Button
-          label="Create me a playlist"
+          label="Suggest a song for me"
           type="submit"
+          btnType="primary"
           className="mt-10"
           {...(isLoading && {
             disabled: true,
