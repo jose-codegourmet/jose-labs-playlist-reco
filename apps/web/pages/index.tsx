@@ -1,7 +1,7 @@
 import React from "react";
 import GeneratePlaylistForm from "../components/GeneratePlaylistForm";
 import usePlaylistStore from "../stores/playlist";
-import SongsGenerationContainer from "../components/SongsGenerationContainer";
+import SongsGenerationContainer from "../containers/SongsGenerationContainer";
 import Layout from "../layout/Layout";
 
 export default function Web() {

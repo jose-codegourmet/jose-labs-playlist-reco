@@ -1,6 +1,13 @@
 import { AppProps } from "next/app";
 import "../styles/main.scss";
 import { Albert_Sans } from "next/font/google";
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import {
+  SessionContextProvider,
+  Session,
+  useUser,
+  useSession,
+} from "@supabase/auth-helpers-react";
 
 import {
   DehydratedState,
@@ -10,6 +17,7 @@ import {
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
+
 type ReactQueryProps = {
   pageProps: {
     dehydratedState: DehydratedState;
@@ -26,21 +34,45 @@ const fontfamily = Albert_Sans({
   subsets: ["latin"],
 });
 
+const themes = [
+  "dark",
+  "cupcake",
+  "retro",
+  "halloween",
+  "forest",
+  "dracula",
+  "coffee",
+  "luxury",
+  "valentine",
+  "cyberpunk",
+];
+
+//randomize themes
+const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+
+type MyAppProps = AppProps &
+  ReactQueryProps & {
+    initialSession: Session;
+  };
+
 // This default export is required in a new `pages/_app.js` file.
-export default function MyApp({
-  Component,
-  pageProps,
-}: AppProps & ReactQueryProps) {
+export default function MyApp({ Component, pageProps }: MyAppProps) {
   const [queryClient] = useState(() => new QueryClient());
+  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <div data-theme="forest" className={fontfamily.className}>
-          <Component {...pageProps} />
-        </div>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </Hydrate>
-    </QueryClientProvider>
+    <SessionContextProvider
+      supabaseClient={supabaseClient}
+      initialSession={pageProps.initialSession}
+    >
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <div data-theme={randomTheme} className={fontfamily.className}>
+            <Component {...pageProps} />
+          </div>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </Hydrate>
+      </QueryClientProvider>
+    </SessionContextProvider>
   );
 }

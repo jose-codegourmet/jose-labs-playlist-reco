@@ -17,3 +17,18 @@ export const getPlaylistHandlers = (): RestHandler[] => {
     ),
   ];
 };
+
+export const getPlaylist = (): RestHandler[] => {
+  return [
+    rest.post(
+      `${process.env.envAiApiUrl}/get-playlist/sample-playlist`,
+      (_, res, ctx) => {
+        return res(
+          ctx.delay(5000),
+          ctx.status(StatusCodes.OK),
+          ctx.json(GENERATE_PLAYLIST_RESPONSE)
+        );
+      }
+    ),
+  ];
+};

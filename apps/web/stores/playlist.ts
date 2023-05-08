@@ -1,21 +1,6 @@
+import { SongModel } from "models";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-
-export interface SongModel {
-  youtubeLink: string;
-  title: string;
-  artist: string;
-  album: string;
-}
-
-export interface PlaylistModel {
-  id: string;
-  title: string;
-  handle: string;
-  isVisible: boolean;
-  createdDate: string;
-  songs: SongModel[];
-}
 
 export interface IPlaylistStoreState {
   mood: string;

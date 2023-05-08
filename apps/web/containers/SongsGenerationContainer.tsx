@@ -3,7 +3,7 @@ import usePlaylistStore, {
   IPlaylistStoreState,
   SongModel,
 } from "../stores/playlist";
-import SongCard from "./SongCard";
+import SongCard from "../components/SongCard";
 
 export interface SongsGenerationContainerProps {
   suggestedSongs: IPlaylistStoreState["suggestedSongs"];

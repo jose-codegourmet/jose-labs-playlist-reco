@@ -1,3 +1,5 @@
+import { SAMPLE_SONG_1, SAMPLE_SONG_2, SAMPLE_SONG_3 } from "models";
+
 const sad = {
   status: 200,
   response: {
@@ -42,26 +44,7 @@ const happy = {
       completion_tokens: 144,
       total_tokens: 254,
     },
-    playlist: [
-      {
-        title: 'Don"\'"t Worry Be Happy',
-        " artist": " Bobby McFerrin",
-        " album": " Simple Pleasures",
-        " youtubeLink": " https://www.youtube.com/watch?v=d-diB65scQU",
-      },
-      {
-        title: "Good Vibrations",
-        " artist": " The Beach Boys",
-        " album": " Smile",
-        " youtubeLink": " https://www.youtube.com/watch?v=Eab_beh07HU",
-      },
-      {
-        title: "Can't Stop The Feeling!",
-        " artist": " Justin Timberlake",
-        " album": " Trolls: Original Motion Picture Soundtrack",
-        " youtubeLink": " https://www.youtube.com/watch?v=ru0K8uYEZWw",
-      },
-    ],
+    playlist: [SAMPLE_SONG_1, SAMPLE_SONG_2, SAMPLE_SONG_3],
     hexcodes: [
       "#FFD700",
       "#FFA07A",

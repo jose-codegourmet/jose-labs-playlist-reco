@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const GPT_API_CONFIG = {
-  baseURL: process.env.envAiApiUrl,
+  baseURL: process.env.AI_API_URL,
 };
 
 console.log("[+] config === ", GPT_API_CONFIG);

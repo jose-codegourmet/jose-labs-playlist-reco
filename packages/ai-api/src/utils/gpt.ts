@@ -7,22 +7,24 @@ const configuration = new Configuration({
   apiKey: process.env.ENV_OPENAI_API_KEY,
 });
 
-const openai = new OpenAIApi(configuration);
+export const gpt = new OpenAIApi(configuration);
 
-export default async function doPrompt(prompt: string) {
-  if (!configuration.apiKey) {
-    return {
-      status: 500,
-      error: {
-        message:
-          "OpenAI API key not configured, please follow instructions in README.md",
-      },
-    };
-  }
+export type PromptConfig = {
+  prompt: string;
+  promptModel?: string;
+  selectKeysFromResponse?: string[];
+};
+
+export const doPrompt = async (promptConfig: PromptConfig) => {
+  const {
+    prompt,
+    promptModel: model = "gpt-3.5-turbo",
+    selectKeysFromResponse = ["id", "model", "usage", "choices"],
+  } = promptConfig;
 
   try {
-    const completion = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
+    const completion = await gpt.createChatCompletion({
+      model,
       messages: [{ role: "user", content: prompt }],
     });
 
@@ -30,7 +32,7 @@ export default async function doPrompt(prompt: string) {
       status: 200,
       response: {
         message: {
-          ...pick(completion.data, ["id", "model", "usage", "choices"]),
+          ...pick(completion.data, selectKeysFromResponse),
         },
       },
     };
@@ -50,4 +52,4 @@ export default async function doPrompt(prompt: string) {
       };
     }
   }
-}
+};

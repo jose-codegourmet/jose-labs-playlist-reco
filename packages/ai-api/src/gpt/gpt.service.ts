@@ -1,12 +1,6 @@
-import { pick } from "lodash";
 import csvToObject from "../utils/csvStringToObject";
-import doPrompt from "./gpt";
 import dotenv from "dotenv";
-import {
-  ChatCompletionResponseMessage,
-  CreateChatCompletionResponse,
-} from "openai";
-
+import { doPrompt } from "../utils/gpt";
 dotenv.config();
 
 type SuccessfulContent = {
@@ -14,7 +8,7 @@ type SuccessfulContent = {
   hexcodes?: string[];
 };
 
-export default async function generateMoodPlaylistFromPrompt(mood: string) {
+export const generatePlaylistAndPaletteByMood = async (mood: string) => {
   const prompt = `
     Generate a ${process.env.ENV_SONGS_LIMIT} song playlist based on this mood "${mood}" in csv format with this schema and escape the commas inside the values
     {
@@ -23,18 +17,15 @@ export default async function generateMoodPlaylistFromPrompt(mood: string) {
         album: string;
         youtubeLink: string
     }
-    where in youtubeLink is a public url from youtube
-
-    and suggest a 6 palette hexcode based on the mood
-
+    where in youtubeLink is a public url from youtube and suggest a 6 palette hexcode based on the mood
     where the return value is
     {
       "hexcodes": string[];
       "csv": string;
     }
-    `;
+  `;
 
-  const { status, response } = await doPrompt(prompt.trim());
+  const { status, response } = await doPrompt({ prompt: prompt.trim() });
 
   if (response?.message) {
     const { id, model, usage, choices } = response.message;
@@ -72,4 +63,4 @@ export default async function generateMoodPlaylistFromPrompt(mood: string) {
     response,
     mood,
   };
-}
+};
