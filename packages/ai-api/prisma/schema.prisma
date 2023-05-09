@@ -12,12 +12,14 @@ generator client {
 }
 
 model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  Int?
+  id         Int      @id @default(autoincrement())
+  title      String
+  content    String?
+  published  Boolean  @default(false)
+  author     Profile? @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  authorId   Int?
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
 }
 
 model Song {
@@ -27,24 +29,35 @@ model Song {
   youtubeId  String
   Playlist   Playlist? @relation(fields: [playlistId], references: [id])
   playlistId Int?
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
 }
 
 model Playlist {
-  id          Int     @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   title       String
   description String
-  published   Boolean @default(false)
+  published   Boolean  @default(false)
   songs       Song[]
-  owner       User?   @relation(fields: [ownerId], references: [id])
+  owner       Profile? @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   ownerId     Int?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
 }
 
-model User {
-  id         Int        @id @default(autoincrement())
-  email      String     @unique
-  name       String?
-  age        Int
-  posts      Post[]
-  playlist   Playlist[]
-  updated_at DateTime   @updatedAt
+model Profile {
+  id            Int        @id @default(autoincrement())
+  auth_id       String     @unique
+  auth_provider String
+  email         String     @unique
+  username      String?    @unique
+  first_name    String?
+  last_name     String?
+  age           Int?
+  website       String?
+  avatar_url    String?
+  posts         Post[]
+  playlist      Playlist[]
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @default(now())
 }

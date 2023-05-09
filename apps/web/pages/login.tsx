@@ -22,7 +22,7 @@ const LoginPage = () => {
           <Auth
             supabaseClient={supabaseClient}
             appearance={{ theme: ThemeSupa }}
-            providers={["google", "github", "discord"]}
+            providers={["facebook", "github", "discord"]}
             theme="dark"
             socialLayout="horizontal"
             localization={{
