@@ -1,13 +1,6 @@
 import { AppProps } from "next/app";
 import "../styles/main.scss";
 import { Albert_Sans } from "next/font/google";
-import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import {
-  SessionContextProvider,
-  Session,
-  useUser,
-  useSession,
-} from "@supabase/auth-helpers-react";
 
 import {
   DehydratedState,
@@ -17,6 +10,8 @@ import {
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
+import Layout from "../layout/Layout";
+import AuthGuard from "../wrappers/AuthGuard";
 
 type ReactQueryProps = {
   pageProps: {
@@ -24,9 +19,9 @@ type ReactQueryProps = {
   };
 };
 
-if (process.env.NODE_ENV === "development") {
-  require("../mocks/msw.ts");
-}
+// if (process.env.NODE_ENV === "development") {
+//   require("../mocks/msw.ts");
+// }
 
 const fontfamily = Albert_Sans({
   weight: ["100", "200", "500", "800"],
@@ -50,29 +45,24 @@ const themes = [
 //randomize themes
 const randomTheme = themes[Math.floor(Math.random() * themes.length)];
 
-type MyAppProps = AppProps &
-  ReactQueryProps & {
-    initialSession: Session;
-  };
+type MyAppProps = AppProps & ReactQueryProps;
 
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp({ Component, pageProps }: MyAppProps) {
   const [queryClient] = useState(() => new QueryClient());
-  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 
   return (
-    <SessionContextProvider
-      supabaseClient={supabaseClient}
-      initialSession={pageProps.initialSession}
-    >
+    <AuthGuard pageProps={pageProps}>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <div data-theme={randomTheme} className={fontfamily.className}>
-            <Component {...pageProps} />
+          <div data-theme="dark" className={fontfamily.className}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
           </div>
           <ReactQueryDevtools initialIsOpen={false} />
         </Hydrate>
       </QueryClientProvider>
-    </SessionContextProvider>
+    </AuthGuard>
   );
 }
